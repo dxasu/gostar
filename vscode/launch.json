@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "LaunchGo",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceRoot}\\main.go",
+            "env": {
+                "GOPATH": "D:\\gowrok",
+                "GOROOT": "D:\\Go",
+                "PYTHONIOENCODING":"utf8"
+            },
+            "args": ["--path=gostar.toml", "--vmodule=index=5", "--log_backtrace_at=main.go:47"],
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 1000, //字符串最大长度
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+                }
+        }
+    ]
+}

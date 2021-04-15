@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1.0, user-scalable=no"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>{{.title}}</title>
+    <meta name="author" content="lsc">
+    <meta name="Keywords" content=""/>
+    <meta name="Description" content=""/>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="bookmark" href="/favicon.ico"/>
+
+    <link rel="stylesheet" href="static/css/global.css?v=0.0.1"/>
+</head>
+<body>
+
+<form id="form" class="toast-frame"
+      method="post"
+      action="{{.action}}"
+      enctype="application/x-www-form-urlencoded"
+>
+    <div class="toast-background">
+        <div class="toast-white-background">
+            <div style="text-align: center;margin-top: 20px;">
+                <h2 class="info_add_txt">{{.infoneed}}</h2>
+            </div>
+            <div style="margin: 20px 30px 25px;">
+                {{.content}}
+                <input type="hidden" name="order_id" value="{{.order_id}}">
+
+                <div class="foot-box">
+                    <div class="next-btn" style="background-color: rgb(230, 232, 235);"><label class="next_txt">{{.next}} &gt;</label></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="static/js/jquery-1.11.1.min.js"></script>
+<script src="static/js/client.js?v=0.0.5"></script>
+
+</body>
+</html>

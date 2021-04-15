@@ -1,0 +1,397 @@
+syntax = "proto3";
+
+option go_package = "grpclib";
+
+package user_info;
+
+service UserInfoService {
+    // 用户资料接口
+    //
+    // 获取用户资料
+    rpc GetUserInfo (UserInfoReq) returns (UserInfoResp);
+    // 初始化用户资料，注册时调用
+    rpc InitBaseInfo(BaseInfoReq) returns (UserInfoResp);
+    // 修改用户资料
+    rpc UpdateUserInfo(UpdateUserInfoReq) returns (UserInfoResp);
+    // 搜索用户，当前只支持按照id查找
+    rpc SearchUser(SearchUserReq) returns (SearchUserResp);
+    // 用户profile，聚合接口
+    rpc GetUserProfile(UserInfoReq) returns (UserProfileResp);
+
+    // 用户follow关系服务，好友关系不在这里
+    //
+    // 按页拉取用户关系列表
+    rpc GetRelation(UserRelationReq) returns (UserRelationResp);
+    //  获得对应人的关系
+    rpc GetUserRelation(UserInfoReq) returns (GetUserRelationResp);
+    // 关注和取消关注接口
+    rpc Follow(FollowReq) returns (Empty);
+    // 拉黑和取消拉黑接口
+    rpc Blacklist(BlacklistReq) returns (Empty);
+    // 获取用户粉丝数和关注数
+    rpc GetRelationCounter(UserInfoReq) returns(RelationCounterResp);
+
+    // 用户金币钻石接口
+    //
+    // 获取钻石兑换金币商品列表
+    rpc GetGoodsList(UserInfoReq) returns(GoodsListResp);
+    // 钻石兑换成金币
+    rpc ExchangeGold(ExchangeGoldReq) returns(BalanceResp);
+    // 获取余额
+    rpc GetBalance(UserInfoReq) returns(BalanceResp);
+
+    // 用户虚拟商品接口
+    //
+    //用户购买座驾
+    rpc UserBuyCar(CarInfoReq) returns(BalanceResp);
+    // 获取用户拥有的座驾
+    rpc GetCarItems(UserInfoReq) returns(CarItemsResp);
+    //用户更换座驾
+    rpc UserChangeCar(CarInfoReq) returns(Empty);
+
+    //用户购买头相框
+    rpc UserBuyAvatar(AvatarInfoReq) returns(BalanceResp);
+    // 获取用户拥有的头相框
+    rpc GetAvatarList(UserInfoReq) returns(AvatarItemsResp);
+    //用户更换头相框
+    rpc UserChangeAvatar(AvatarInfoReq) returns(Empty);
+
+    //用户购买vip
+    rpc UserBuyVip(VipInfoReq) returns(UserBuyVipResp);
+    // 获取用户拥有的vip
+    rpc GetVipList(UserInfoReq) returns(VipItemsResp);
+    // vip领取接口
+    rpc VipReceiveCoin(VipReceiveCoinReq) returns(VipReceiveCoinResp);
+    //Vip用户使用座驾及头像框
+    rpc UserChangeVipGift(VipInfoReq) returns(Empty);
+    //vip用户是否领取金币
+    rpc VipUserIsReceiveCoin(UserInfoReq) returns(ReceiveResp);
+
+
+    // 获取弹幕数
+    rpc GetBarrage(BarrageReq) returns(BarrageRsp);
+
+    //背景
+    rpc UserBuyBackground(BackGroundInfoReq) returns(BackGroundInfoResp);
+    rpc GetBackGroundItems(UserInfoReq) returns(BackGroundItemsResp);
+
+    rpc GetUserPrivacy(UserInfoReq) returns(UserPrivacyRsp);
+    rpc UpdateUserPrivacy(UserPrivacyUpdateReq) returns(UserPrivacyRsp);
+
+}
+
+message VipReceiveCoinResp {
+    BalanceResp user_balance = 1;           // 金币余额 
+    uint32  receive_amount =2;               // 领取数量
+}
+
+enum TaskId {
+    kUnKnown                            = 0;        // 未知
+    kVipReceiveCoin                     = 1;        // Vip用户领取
+}
+message VipReceiveCoinReq {
+    uint64  uid = 1;    // 请求uid
+    uint32  task_id = 2;     //1:Vip用户领取  TaskId
+}
+
+//VIP领取金币状态
+message ReceiveResp {
+    uint32  Receive_status = 1;     // 领取状态 0 未领取, 1 已领取 UseStatus
+}
+
+message UserBuyVipResp {
+    BalanceResp user_balance = 1;           // 金币余额    
+    VipInfo vip_info= 2;           // vip信息
+}
+
+enum UserGender {
+    kUnknown = 0;
+    kFemale = 1;
+    kMale = 2;
+}
+
+message SearchUserReq {
+    string search_text = 1;     // 查询文本，昵称，用户id
+}
+
+message SearchUserResp {
+    repeated SimpleUser user_list = 1;  //  用户列表
+}
+
+message UserInfoReq {
+  uint64 uid = 1;   // 请求uid
+}
+
+enum UidType {
+    kOrdinary = 0;
+    kOfficial = 1;
+    kPush = 2;
+}
+
+message LevelInfo {
+    uint32  level = 1;     // 当前等级
+    uint64  exp = 2;     // 当前等级累积的经验值
+    uint64  next_level_exp = 3;   // 当前等级升到下一等级所需累积的总经验值
+}
+
+message UserInfoResp {
+    uint64  uid = 1;    // 请求uid
+    uint32  gender = 2;     // 性别 UserGender
+    string  display_name = 3;   // 昵称
+    uint64  birthday = 4;   // 时间戳，秒单位
+    string  country = 5;    // 国家代码
+    string  avatar = 6;     // 头像
+    string  des_user = 7;    // 个人签名
+    string  lang = 8;     // 用户语言
+    uint64 short_id = 9;    // 短id
+    repeated string photo_wall = 10;   // 照片墙
+    uint32  uid_type = 11;     // 账号类型 UidType
+    
+    //uint32  level = 12;     // 用户等级
+    //uint64  exp = 13;     // 用户等级当前经验值
+    //uint64  next_level_exp = 14;     // 用户下一等级需要的经验值
+    
+    uint32  vip_level = 15;   // vip等级
+    LevelInfo wealth_level_info = 16; // 财富等级信息
+    string  avatar_effect = 17;       // 头像框装饰图
+    uint64  register_ts = 18;   // 注册时间戳，秒单位
+    uint64  last_login_ts = 19;   // 最后登陆时间戳，秒单位
+}
+
+message BaseInfoReq {
+    uint64  uid = 1;    // 请求uid
+    uint32  gender = 2;     // 性别
+    string  display_name = 3;   // 昵称
+    uint64  birthday = 4;   // 时间戳，秒单位
+    string  avatar = 5;     // 头像
+}
+
+message UpdateUserInfoReq {
+    string  display_name = 1;   // 昵称
+    uint64  birthday = 2;   // 时间戳，秒单位
+    string  avatar = 3;     // 头像
+    string  des_user = 4;   //  个人签名
+    repeated string photo_wall = 5;   // 照片墙
+}
+
+enum RelationType {
+    kNone = 0; //
+    kFollow = 1;  // 关注
+    kFan = 2;   // 粉丝	
+    kFriend = 3;   // 好友	
+}
+
+enum BlockType {
+    kBlockNone = 0; //
+    kBlock = 1;  //拉黑
+    kBeBlocked = 2;   //被拉黑
+}
+
+message  GetUserRelationResp{
+    uint64 uid = 1; //对方的uid
+    uint32 type = 2; //RelationType
+    uint32 block_type = 3; //BlockType
+}
+
+message UserRelationReq {
+    uint64 uid = 1;     // 请求uid
+    uint32 type = 2;    // RelationType
+    uint64 start_index = 3; // 拉取索引，从0开始
+}
+
+message SimpleUser {
+    uint64  uid = 1;
+    uint32  gender = 2;     // 性别，UserGender定义
+    string  display_name = 3;   // 昵称
+    uint64  birthday = 4;   // 生日，时间戳，秒单位
+    string  avatar = 5;     // 头像
+    string  des_user = 6; // 签名
+    uint32  vip_level = 7;   // vip等级
+    LevelInfo wealth_level_info = 8; // 财富等级信息
+}
+
+message UserRelationResp {
+    uint64 next_index = 1;  // 下一次拉取的开始索引, 0表示数据已经完毕
+    repeated SimpleUser user_list = 2;  //  关系链列表
+}
+
+enum RelationCmd {
+    kRelationAdd = 0;     //  关注
+    kRelationRemove = 1;   //  取消关注
+}
+
+message FollowReq {
+    uint64 target_uid = 1;      // 目标uid
+    uint32 cmd = 2;      // RelationCmd
+}
+
+enum BlacklistCmd {
+    kBlacklistAdd = 0;     //  拉黑
+    kBlacklistRemove = 1;   //  取消拉黑
+}
+
+message BlacklistReq {
+    uint64 target_uid = 1;      // 目标uid
+    uint32 cmd = 2;      // BlacklistCmd
+}
+
+message Empty {}
+
+message RelationCounterResp {
+    uint32  fans_count = 1;         // 粉丝数
+    uint32  following_count = 2;    // 关注数
+    uint32  buddy_count = 3;        // 好友数
+}
+
+message BalanceResp {
+    uint32 current_gold = 1;        // 金币余额
+    uint32 current_diamond = 2;     // 钻石余额
+    uint32 history_diamond = 3;     // 历史获得的钻石
+}
+
+
+message CarInfo {
+    uint64  car_id = 1;             // 座驾id
+    string  car_name = 2;           // 座驾名称
+    string  preview_picture = 3;    // 预览图
+    string  dynamic_picture = 4;    // 动态图
+    uint32  validity_period = 5;    // 有效天数
+    uint32  car_price = 6;          // 座驾价格
+    uint64  deadline =7;            // 截止日期 (时间戳) 
+    uint32  use_status = 8;         // 是否正在使用 UseStatus
+}
+
+message CarItemsResp {
+    repeated CarInfo car_list= 1;   // 座驾信息列表
+}
+
+message UserProfileResp {
+    UserInfoResp user_info = 1;             // 用户资料
+    BalanceResp user_balance = 2;           // 金币余额
+    RelationCounterResp user_counter = 3;   // 关系计数
+    CarItemsResp car_items = 4;             // 座驾物品
+}
+
+enum UseStatus {
+    kNoUse = 0;      //  暂不使用/卸下
+    kUse = 1;        //  使用
+}
+
+message CarInfoReq {
+  uint64 uid = 1;          // 目标用户id
+  uint64 car_id = 2;       // 更换的car_id
+  uint32 use_status = 3;   // 是否使用  UseStatus
+}
+
+message ExchangeGoldReq {
+    uint64 goods_id = 1;    // 商品id
+}
+
+message GoodsListResp {
+    repeated GoodsItem goods_list = 1;      // 商品列表
+    bool is_open = 2;                       // 当前国家是否开放，客户端开关
+}
+
+message GoodsItem {
+    uint64 goods_id = 1;        // 商品id
+    string goods_desc = 2;      // 商品描述文案，如"100 coin"
+    string goods_price = 3;     // 商品价格文案，如"2000 diamond"
+}
+
+message AvatarInfoReq {
+  uint64 uid = 1;          // 目标用户id
+  uint64 avatar_id = 2;    // 更换的avatar_id
+  uint32 use_status = 3;   // 是否使用  UseStatus
+}
+
+message AvatarInfo {
+    uint64  avatar_id = 1;             // 头像框id
+    string  avatar_name = 2;           // 头像框名称
+    string  preview_picture = 3;       // 预览图
+    string  dynamic_picture = 4;       // 动态图
+    uint32  validity_period = 5;       // 有效天数
+    uint32  avatar_price = 6;          // 头像框价格
+    uint64  deadline =7;               // 截止日期 (时间戳) 
+    uint32  use_status = 8;            // 是否正在使用 UseStatus
+}
+
+message AvatarItemsResp {
+    repeated AvatarInfo avatar_list= 1;   // 头像框信息列表
+}
+
+message VipInfoReq {
+  uint64 uid = 1;          // 目标用户id
+  uint64 vip_id = 2;       // 购买的vip_id
+  uint32 use_status = 3;   // 是否使用  UseStatus
+}
+
+message VipInfo {
+    uint64  vip_id = 1;                // vip id
+    uint32  vip_level = 2;             // vip 级别
+    string  vip_name = 3;              // vip 名称
+    uint32  validity_period = 4;       // 有效天数
+    uint32  vip_price = 5;             // vip价格
+    uint64  deadline = 6;              // 截止日期 (时间戳) 
+    string  medal_icon = 7;       // 预览图
+    string  medal_webp = 8;       // 动态图
+}
+
+message VipItemsResp {
+    repeated VipInfo vip_list= 1;   // vip信息列表
+}
+
+message BarrageReq {
+    uint64 uid = 1;          // 目标用户id
+}
+
+message BarrageRsp {
+    uint32  num = 1;             // 弹幕数
+}
+
+message GetProfileGiftReq {
+    uint64 uid = 1;          // 目标用户id
+    uint32 page = 2;        // 页号，从0开始
+    uint32 page_size = 3;        // 页大小
+}
+
+
+message BackGroundInfoReq {
+  uint64 uid = 1;          // 目标用户id
+  uint64 id = 2;           // 背景id
+  uint32 use_status = 3;   // 是否使用
+}
+
+message BackGroundInfoResp {
+  BalanceResp balance = 1;
+  BackGroundInfo background = 2;
+}
+
+message BackGroundInfo {
+    uint64  id = 1;             // 头像框id
+    string  background = 2;
+    string  background_square = 3;
+    string  background_thumb = 4;
+    uint32  validity_period = 5;
+    uint32  background_type = 6;
+    uint32  price = 7;
+    uint64  deadline = 8;
+    uint32  use_status = 9;
+}
+
+message BackGroundItemsResp {
+    repeated BackGroundInfo bg_list= 1;   // 头像框信息列表
+}
+
+message UserPrivacy {
+    bool hidden_country = 1;
+    bool hidden_login_time = 2;
+}
+
+message UserPrivacyUpdateReq {
+    UserPrivacy user_privacy = 1;
+}
+
+message UserPrivacyRsp {
+    UserPrivacy user_privacy = 1;
+}
+

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{.title}}</title>
+</head>
+<body>
+<div align="center">
+    <h1>填写信息</h1>
+    <form action="{{.action}}" method="post" enctype="multipart/form-data">
+        {{.content}}  
+        <input type="submit" value="提交">
+    </form>
+</div>
+</body>
+</html>

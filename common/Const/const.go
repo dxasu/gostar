@@ -1,0 +1,29 @@
+package Const
+
+const (
+	STATE_ALLSUCCESS     = 0 //成功（结果状态）
+	STATE_ORDERED        = 1 //已下单（中间状态）
+	STATE_PAYSUCCESS     = 2 //支付成功（中间状态）
+	STATE_PAYFAILED      = 3 //支付失败（结果状态）
+	STATE_PAYCANCELED    = 4 //支付取消（结果状态）
+	STATE_DELIVERSUCCESS = 5 //发货成功（中间状态）
+	STATE_DELIVERFAILED  = 6 //发货失败（中间状态）
+
+	CODE_CALLDELIVERFAILED   = 1001 // 调用北京rpc接口失败
+	CODE_GOODSCONFERROR      = 1002 // 商品配置有问
+	CODE_DBINTERNALERROR     = 1003 // db相关错误
+	CODE_ORDERREALPRICEERROR = 1004 //  实际扣费和下单的商品价格不一致
+
+	CODE_PARAMSINVALID  = 2000
+	CODE_GOODSIDINVALID = 2001
+	CODE_USERNOTFOUND   = 2002
+	CODE_INTERNALERROR  = 2003
+	CODE_ORDERNOTFOUND  = 2004
+)
+
+// GetUserInfo
+const (
+	USERINFO_VALID   = 1
+	USERINFO_INVALID = 2
+	USERINFO_NULL    = 3
+)

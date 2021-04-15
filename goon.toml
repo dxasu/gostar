@@ -1,0 +1,3 @@
+[maincfg]
+JSONCONFIG    = "configlocal.json"
+ENV           = "debug"

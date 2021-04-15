@@ -1,0 +1,142 @@
+{
+    "server":"0.0.0.0:5182",
+    "host":"http://127.0.0.1:5182",
+    "payURL":"https://www.baidu.com/api/v1",
+    "notifyURL":"/notifycallback",
+    "deliverKey": "wait_deliver_mq",
+    "project":"gostar",
+    "needuinfo":"true",
+    "mysqlCfg":{
+        "host":"127.0.0.1:3306",
+        "user":"root",
+        "password":"123456",
+        "database":"pay",
+        "maxconn":100
+    },
+    "redisCfg":{
+    "host":"127.0.0.1:6379",
+    "password":""
+    },
+    "language":{
+        "en":{
+            "infoneed":"Informations Needed",
+            "name":"Name",
+            "first_name":"Family Name",
+            "last_name":"Last Name",
+            "number":"RP",
+            "email":"Email",
+            "phone":"Phone Number",
+            "next":"Next >"
+        },
+        "ar":{
+            "infoneed":"تمت إضافة المعلومات",
+            "name":"اسم",
+            "first_name":"اسم العائلة",
+            "last_name":"اسم",
+            "number":"رقم الهوية",
+            "email":"البريد الإلكتروني",
+            "phone":"رقم التليفون",
+            "next":"الخطوة التالية"
+        },
+        "es":{
+            "infoneed":"Información agregada",
+            "name":"Nombre",
+            "first_name":"Apellido",
+            "last_name":"Nombre",
+            "number":"RP",
+            "email":"Email",
+            "phone":"Número de teléfono",
+            "next":"Siguiente >"
+        },
+        "fr":{
+            "infoneed":"Informations ajoutées",
+            "name":"Nom",
+            "first_name":"Nom de famille",
+            "last_name":"Nom",
+            "number":"RP",
+            "email":"Email",
+            "phone":"Numéro de téléphone",
+            "next":"Suivant >"
+        },
+        "id":{
+            "infoneed":"Informasi Ditambahkan",
+            "name":"Nama",
+            "first_name":"Nama keluarga",
+            "last_name":"Nama",
+            "number":"Nomor Identitas",
+            "email":"Surel",
+            "phone":"Nomor telepon",
+            "next":"Berikutnya >"
+        },
+        "ja":{
+            "infoneed":"追加された情報",
+            "name":"名前",
+            "first_name":"苗字",
+            "last_name":"名前",
+            "number":"識別番号",
+            "email":"Eメール",
+            "phone":"電話番号",
+            "next":"次の一歩"
+        },
+        "pt":{
+            "infoneed":"Informações Adicionadas",
+            "name":"Nome",
+            "first_name":"Sobrenome",
+            "last_name":"Nome",
+            "number":"RP",
+            "email":"O email",
+            "phone":"Número de telefone",
+            "next":"Próximo >"
+        },
+        "th":{
+            "infoneed":"เพิ่มข้อมูลแล้ว",
+            "name":"ชื่อ",
+            "first_name":"นามสกุล",
+            "last_name":"ชื่อ",
+            "number":"หมายเลขประจำตัว",
+            "email":"อีเมล์",
+            "phone":"หมายเลขโทรศัพท์",
+            "next":"ถัดไป >"
+        },
+        "tr":{
+            "infoneed":"Bilgi Eklendi",
+            "name":"Soyisim",
+            "first_name":"Soyadı",
+            "last_name":"İsim Soyisim",
+            "number":"Kimlik Numarası",
+            "email":"Eposta",
+            "phone":"Telefon numarası",
+            "next":"Sonraki >"
+        },
+        "zh":{
+            "infoneed":"信息補全",
+            "name":"姓名",
+            "first_name":"姓",
+            "last_name":"名",
+            "number":"身份證號",
+            "email":"電子郵箱",
+            "phone":"手機號",
+            "next":"下一步 >"
+        },
+        "ko":{
+            "infoneed":"추가 된 정보",
+            "name":"이름",
+            "first_name":"성",
+            "last_name":"이름",
+            "number":"식별 번호",
+            "email":"이메일",
+            "phone":"전화 번호",
+            "next":"다음 단계"
+        },
+        "kr":{
+            "infoneed":"추가 된 정보",
+            "name":"이름",
+            "first_name":"성",
+            "last_name":"이름",
+            "number":"식별 번호",
+            "email":"이메일",
+            "phone":"전화 번호",
+            "next":"다음 단계"
+        }
+    }
+  }
