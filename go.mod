@@ -1,4 +1,4 @@
-module gostar
+module github.com/dxasu/gostar
 
 go 1.15
 
