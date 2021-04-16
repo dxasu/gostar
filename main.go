@@ -24,7 +24,7 @@ func main() {
 	//go grpclib.GrpcInit()
 	//dbase, redis = CommonInit()
 
-	chSig := make(chan os.Signal)
+	chSig := make(chan os.Signal, 1)
 	signal.Notify(chSig, syscall.SIGINT, syscall.SIGTERM)
 	log.Warningf("main signal:%+v", <-chSig)
 }
