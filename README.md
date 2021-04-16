@@ -1,4 +1,4 @@
-# *gostar*
+# *goon*
 
 ## gin
 * router
@@ -66,11 +66,17 @@ func main() {
 ```
 
 ---
-*gostar*
-**gostar**
-~~gostar~~
+*goon*
+**goon**
+~~goon~~
 
 
 ***
-# markdown
+# other
 1. [markdown网址](https://www.cnblogs.com/liugang-vip/p/6337580.html)
+2. git tags
+git tag -a "project-v0.6.1" -m "release go star"
+git push --follow-tags
+git push origin project -u --follow-tags
+3. go build
+go env -w GOPROXY=http://mirrors.aliyun.com/goproxy/

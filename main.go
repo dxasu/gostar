@@ -5,12 +5,17 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/dxasu/gostar/common"
 	"github.com/dxasu/gostar/config"
-	"github.com/dxasu/gostar/paylogic"
 
 	log "github.com/dxasu/gostar/util/glog"
 
 	_ "github.com/go-sql-driver/mysql"
+)
+
+var (
+	dbase *common.DBORM
+	redis *common.REDIS
 )
 
 func main() {
@@ -18,8 +23,7 @@ func main() {
 
 	config.Init()
 	//go grpclib.GrpcInit()
-
-	paylogic.Init()
+	dbase, redis = common.CommonInit()
 
 	chSig := make(chan os.Signal)
 	signal.Notify(chSig, syscall.SIGINT, syscall.SIGTERM)
