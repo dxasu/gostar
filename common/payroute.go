@@ -6,79 +6,13 @@ import (
 	"net/http"
 	"runtime"
 	"strconv"
-	"strings"
 
 	"github.com/dxasu/gostar/config"
 	"github.com/dxasu/gostar/db"
 	log "github.com/dxasu/gostar/util/glog"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
-
-func CommonInit() (dbase *DBORM, redis *REDIS) {
-	redis = NewRedis("redisCfg")
-	dbase = NewDB("mysqlCfg", &gorm.Config{
-		// PrepareStmt: false,
-		// DryRun:      false,
-		// PrepareStmt: false,
-		// DisableAutomaticPing: true,
-		// TablePrefix: "t_",   // 表名前缀，`User` 的表名应该是 `t_users`
-		// SingularTable: true, // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `t_user`
-		// SkipDefaultTransaction: true,
-	})
-
-	go routehandle(func(c *gin.Context) {
-		c.Set("*DBORM", dbase)
-		c.Set("*REDIS", redis)
-	})
-	return dbase, redis
-}
-
-func setLanguage(c *gin.Context) {
-	var lang string
-	if lang = c.Param("lang"); lang == "" {
-		lang = c.Query("lang")
-	}
-	if len(lang) < 2 {
-		lang = "en"
-	}
-
-	lang = strings.ToLower(lang)[0:2]
-	langinfo := config.GetMapBYKey("language." + lang)
-
-	c.Set("langinfo", langinfo)
-}
-
-// routehandle
-func routehandle(initmiddle func(c *gin.Context)) {
-	router := gin.Default()
-	router.Use(initmiddle)
-	router.LoadHTMLGlob("html/*.html")
-	router.StaticFS("/static", http.Dir("./static"))
-
-	router.GET("/form", setLanguage, func(c *gin.Context) {
-		CommitInfo(c, "", []PropInfo{
-			{"Name:", "text", "name", "uname"},
-			{"Email:", "text", "email", "email"},
-			{"Document:", "text", "document", "123"},
-		})
-	})
-
-	subrouter := router.Group("/show")
-	{
-		subrouter.POST("/create", CreateTransaction)
-		//subrouter.StaticFS("/static", http.Dir("../../static"))
-	}
-
-	serverHost := config.GetCfgByKey("server")
-	log.Infof("router.Run server host:%s\n", serverHost)
-
-	err := router.Run(serverHost)
-	//router.RunTLS(serverHost, "server.crt", "server.key")
-
-	log.Warningf("ListenAndServe closed err:%+v\n", err)
-}
 
 // NotifyMsg
 func NotifyMsg(c *gin.Context, code int, msg string) {
