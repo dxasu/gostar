@@ -193,7 +193,9 @@ func PayOKAndDeliver(c *gin.Context) {
 
 	err := dbase.UpdateByMap("pay_flow", db.K{
 		"status": Const.STATE_PAYSUCCESS,
-	}, "order_id", orderData.Order_id)
+		"order":  orderData.Order_id,
+	}, "order_id")
+
 	if err != nil {
 		log.Warningf("PayOKAndDeliver UpdateByMap pay_flow orderId:%s err:%+v\n", orderData.Order_id, err)
 	}

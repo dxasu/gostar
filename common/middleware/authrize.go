@@ -37,7 +37,7 @@ func Authorized(c *gin.Context) {
 
 	if err != nil {
 		log.Warningf("Authorized err:%+v\n", err)
-		errMsg := fmt.Sprintf(`{"ret_code":%d, "err_desc":"order not found", "orderId":"%s"}`, Const.CODE_ORDERNOTFOUND, orderId)
+		errMsg := fmt.Sprintf(`"err_desc":"order not found", "orderId":"%s"`, orderId)
 		respondWithError(http.StatusBadRequest, errMsg, c)
 		return
 	}
@@ -49,7 +49,7 @@ func Authorized_Check(c *gin.Context) {
 	order, _ := c.Get("*OrderInfo")
 	orderData := order.(*common.OrderInfo)
 	if orderData.Status == Const.STATE_ALLSUCCESS {
-		errMsg := `{"ret_code":0, "err_desc": "order commplete"}`
+		errMsg := `"ret_code":0, "err_desc": "order commplete or miss"`
 		log.Warningf("order.status:%d, orderid:%s", orderData.Status, orderData.Order_id)
 		respondWithError(http.StatusBadRequest, errMsg, c)
 	}
