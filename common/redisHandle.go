@@ -7,10 +7,15 @@ import (
 	"github.com/dxasu/gostar/config"
 	"github.com/dxasu/gostar/db"
 	log "github.com/dxasu/gostar/util/glog"
+	"github.com/go-redis/redis"
 )
 
 type REDIS struct {
 	db.REDIS
+}
+
+func IsRedisNil(err error) bool {
+	return err == redis.Nil
 }
 
 func NewRedis(cfgKey string) *REDIS {

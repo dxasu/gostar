@@ -112,7 +112,7 @@ func (master *DBORM) SaveByMap(table string, data map[string]interface{}, keys .
 }
 
 func (master *DBORM) GetByMap(table string, keys map[string]interface{}) (map[string]interface{}, error) {
-	log.Infof("InsertByMap table:%s keys:%+v\n", table, keys)
+	log.Infof("GetByMap table:%s keys:%+v\n", table, keys)
 	data := make(map[string]interface{})
 	err := master.Table(table).Where(keys).Scan(&data).Error
 	return data, err
