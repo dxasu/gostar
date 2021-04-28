@@ -27,6 +27,39 @@ c.Get("current_manager") //从用户上下文读取值
 sessions.Default(c).get("user") //从session中读取值
 ```
 
+* func GetCfgByKey(key string) string
+* func GetByKey(key string) interface{}
+* func GetMapBYKey(key string) map[string]interface{}
+* func GetCfgMapStr(key string) map[string]string
+
+* func GetRequestMsg(method, url string, content []byte, header HEAD) (string, error)
+```
+form := url.Values{}
+form.Set("grant_type", "authorization_code")
+msg, err := common.GetRequestMsg("POST", "http://www.xxx.com", []byte(form.Encode()), common.HEAD{
+			"Content-Type": "application/x-www-form-urlencoded",
+		})
+
+errstr = gjson.Get(msg, "msg.error").String()
+```
+
+### main 
+```
+func main() {
+	defer log.Flush()
+
+	config.Init()
+	//go grpclib.GrpcInit()
+
+	paylogic.Init()
+	orm.Test()
+
+	chSig := make(chan os.Signal)
+	signal.Notify(chSig, syscall.SIGINT, syscall.SIGTERM)
+	log.Warningf("main signal:%+v", <-chSig)
+}
+```
+
 ## gorm 
 * [gorm](https://gorm.io/zh_CN/docs/query.html)
     > https://gorm.io/zh_CN/docs/query.html
@@ -48,22 +81,6 @@ stmt.SQL.String() //=> SELECT * FROM `users` WHERE `id` = $1 ORDER BY `id`
 stmt.Vars         //=> []interface{}{1}
 ```
 
-
-```
-func main() {
-	defer log.Flush()
-
-	config.Init()
-	//go grpclib.GrpcInit()
-
-	paylogic.Init()
-	orm.Test()
-
-	chSig := make(chan os.Signal)
-	signal.Notify(chSig, syscall.SIGINT, syscall.SIGTERM)
-	log.Warningf("main signal:%+v", <-chSig)
-}
-```
 
 ---
 *goon*

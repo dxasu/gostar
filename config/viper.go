@@ -32,6 +32,11 @@ func GetCfgByKey(key string) string {
 	return viper.GetString(key)
 }
 
+// GetByKey
+func GetByKey(key string) interface{} {
+	return viper.Get(key)
+}
+
 // GetMapBYKey 获取配置信息
 func GetMapBYKey(key string) map[string]interface{} {
 	return viper.GetStringMap(key)
