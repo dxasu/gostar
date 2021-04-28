@@ -18,25 +18,25 @@ func Init() {
 	}()
 
 	bootcfg := viper.GetString("path")
-
 	viperInit(bootcfg)
+
+	jsonFile := viper.GetString("maincfg.config")
+	viperInit(jsonFile)
 
 	initEnv()
 
-	jsonFile := viper.GetString("maincfg.jsonconfig")
-
-	viperInit(jsonFile)
 	ViperWatch()
 
 	log.Infoln("Init all config success!")
 }
 
 func initEnv() {
-	cfgenv := viper.GetString("maincfg.env")
-
-	os.Setenv("env", cfgenv)
-
-	gin.SetMode(cfgenv)
+	cfgenv := viper.GetStringMapString("environment")
+	for k, v := range cfgenv {
+		os.Setenv(k, v)
+	}
+	env := os.Getenv("env")
+	gin.SetMode(env)
 }
 
 // func loadJsonConfig(cfgfile string) string {

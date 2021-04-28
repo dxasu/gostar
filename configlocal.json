@@ -1,9 +1,7 @@
 {
-    "server":"0.0.0.0:5182",
-    "host":"http://127.0.0.1:5182",
-    "payURL":"https://www.baidu.com/api/v1",
-    "notifyURL":"/notifycallback",
-    "deliverKey": "wait_deliver_mq",
+    "server":"0.0.0.0:8000",
+    "host":"http://127.0.0.1:8000",
+    "deliverKey": "delivermq",
     "project":"gostar",
     "needuinfo":"true",
     "mysqlCfg":{
@@ -16,6 +14,11 @@
     "redisCfg":{
     "host":"127.0.0.1:6379",
     "password":""
+    },
+    "environment":{
+        "ENV":"debug",
+        "GOPROXY":"http://mirrors.aliyun.com/goproxy/",
+        "GOPRIVATE": "gitlab-vywrajy.xxx.net"
     },
     "language":{
         "en":{
