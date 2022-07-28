@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	log "../util/glog"
+	log "github.com/dxasu/gostar/util/glog"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
